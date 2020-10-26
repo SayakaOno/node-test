@@ -21,6 +21,9 @@ const contactSchema = mongoose.Schema({
 });
 
 mongoose.pluralize(null);
-const employeeModel = mongoose.model('myemployee_test', contactSchema);
+const employeeModel = mongoose.model(
+  `myemployee_${process.env.NODE_ENV}`,
+  contactSchema
+);
 
 module.exports = employeeModel;
