@@ -1,6 +1,7 @@
 const employeeModel = require('../model/employee.model');
 const joi = require('@hapi/joi');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 
 const schema = joi.object({
@@ -104,7 +105,7 @@ exports.updateEmployeeById = async (req, res, next) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(500).json(err.message);
   }
 };
 
@@ -123,4 +124,39 @@ exports.deleteEmployeeById = async (req, res, next) => {
       console.log(err);
       res.status(500).json(err);
     });
+};
+
+exports.login = async (req, res, next) => {
+  try {
+    const joiCheck = await schema.validate(req.body);
+    if (joiCheck.error) {
+      return res.status(400).json(joiCheck.error.message);
+    }
+    const employee = await employeeModel.findOne({ email: req.body.email });
+    if (!employee) {
+      return res
+        .status(400)
+        .json('Email you provided does not exist in our database');
+    }
+    const validatePassword = await bcrypt.compare(
+      req.body.password,
+      employee.password
+    );
+    if (!validatePassword) {
+      return res
+        .status(400)
+        .send('you provided an invalid password, please try again');
+    }
+    const jwtToken = await jwt.sign(
+      {
+        data: employee
+      },
+      'secret',
+      { expiresIn: '1h' }
+    );
+    res.header('auth-token', jwtToken);
+    res.status(201).json(employee);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
 };

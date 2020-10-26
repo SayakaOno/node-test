@@ -1,0 +1,17 @@
+const jwt = require('jsonwebtoken');
+
+const verifytoken = (req, res, next) => {
+  const token = req.header('auth-token');
+  if (!token) {
+    res.status(400).json('Toekn not provided in auth-token header');
+  }
+  try {
+    const jwtTokenVerify = jwt.verify(token, 'secret');
+    req.user = jwtTokenVerify;
+  } catch (err) {
+    res.status(400).json('Wrong token');
+  }
+  next();
+};
+
+module.exports = verifytoken;
