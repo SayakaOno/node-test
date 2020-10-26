@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const verifytoken = (req, res, next) => {
   const token = req.header('auth-token');
@@ -6,7 +9,7 @@ const verifytoken = (req, res, next) => {
     res.status(400).json('Toekn not provided in auth-token header');
   }
   try {
-    const jwtTokenVerify = jwt.verify(token, 'secret');
+    const jwtTokenVerify = jwt.verify(token, process.env.JWT_TOKEN_KEY);
     req.user = jwtTokenVerify;
   } catch (err) {
     res.status(400).json('Wrong token');

@@ -2,7 +2,10 @@ const employeeModel = require('../model/employee.model');
 const joi = require('@hapi/joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 const saltRounds = 10;
+
+dotenv.config();
 
 const schema = joi.object({
   name: joi.string().required(),
@@ -151,7 +154,7 @@ exports.login = async (req, res, next) => {
       {
         data: employee
       },
-      'secret',
+      process.env.JWT_TOKEN_KEY,
       { expiresIn: '1h' }
     );
     res.header('auth-token', jwtToken);
