@@ -1,4 +1,4 @@
-const controller = require('../controller/employee.model');
+const controller = require('../controller/employee.controller');
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
