@@ -40,3 +40,87 @@ exports.createEmployee = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
+
+exports.getAllEmployees = async (req, res, next) => {
+  try {
+    const allEmployees = await employeeModel.find({});
+    if (allEmployees && allEmployees.length > 0) {
+      res.status(200).json(allEmployees);
+    } else {
+      res.status(404).send();
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+// exports.getEmployeeById = async (req, res, next) => {
+//   try {
+//     const employee = await employeeModel.findById(req.params.employee_id);
+//     if (employee) {
+//       res.status(200).json(employee);
+//     } else {
+//       res.status(404).send();
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// };
+
+// using callback
+exports.getEmployeeById = async (req, res, next) => {
+  try {
+    employeeModel.findById(req.params.employee_id, function(err, employee) {
+      if (err) {
+        return res.send(err);
+      } else {
+        if (employee) {
+          return res.status(200).json(employee);
+        } else {
+          return res.status(404).json('User not found');
+        }
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
+exports.updateEmployeeById = async (req, res, next) => {
+  try {
+    const updatedEmployee = await employeeModel.findByIdAndUpdate(
+      req.params.employee_id,
+      req.body,
+      {
+        useFindAndModify: false
+      }
+    );
+    if (updatedEmployee) {
+      res.status(201).json(updatedEmployee);
+    } else {
+      res.status(400).send();
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
+exports.deleteEmployeeById = async (req, res, next) => {
+  employeeModel
+    .findByIdAndDelete(req.params.employee_id)
+    .then(result => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        console.log('User Not Found');
+        res.status(404).json('User not found');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
