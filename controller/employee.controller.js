@@ -105,7 +105,7 @@ exports.updateEmployeeById = async (req, res, next) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json(err.message);
+    res.status(500).json(err);
   }
 };
 
