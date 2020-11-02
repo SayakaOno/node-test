@@ -55,39 +55,39 @@ exports.getAllEmployees = async (req, res, next) => {
   }
 };
 
+exports.getEmployeeById = async (req, res, next) => {
+  try {
+    const employee = await employeeModel.findById(req.params.employee_id);
+    if (employee) {
+      res.status(200).json(employee);
+    } else {
+      res.status(404).send();
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};
+
+// using callback
 // exports.getEmployeeById = async (req, res, next) => {
 //   try {
-//     const employee = await employeeModel.findById(req.params.employee_id);
-//     if (employee) {
-//       res.status(200).json(employee);
-//     } else {
-//       res.status(404).send();
-//     }
+//     employeeModel.findById(req.params.employee_id, function(err, employee) {
+//       if (err) {
+//         return res.send(err);
+//       } else {
+//         if (employee) {
+//           return res.status(200).json(employee);
+//         } else {
+//           return res.status(404).json('User not found');
+//         }
+//       }
+//     });
 //   } catch (err) {
 //     console.log(err);
 //     res.status(500).json(err);
 //   }
 // };
-
-// using callback
-exports.getEmployeeById = async (req, res, next) => {
-  try {
-    employeeModel.findById(req.params.employee_id, function(err, employee) {
-      if (err) {
-        return res.send(err);
-      } else {
-        if (employee) {
-          return res.status(200).json(employee);
-        } else {
-          return res.status(404).json('User not found');
-        }
-      }
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-};
 
 exports.updateEmployeeById = async (req, res, next) => {
   try {

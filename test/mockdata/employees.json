@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "1234567890",
+    "name": "Sayaka",
+    "email": "sayaka@test.com",
+    "create_date": "2020-10-31T09:10:52.734Z",
+    "__v": 0
+  },
+  {
+    "_id": "2345678901",
+    "name": "Madoka",
+    "email": "madoka@test.com",
+    "create_date": "2020-11-01T09:10:52.734Z",
+    "__v": 0
+  }
+]
