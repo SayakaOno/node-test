@@ -157,6 +157,6 @@ exports.login = async (req, res, next) => {
     res.header('auth-token', jwtToken);
     res.status(201).json(employee);
   } catch (err) {
-    res.status(500).json(err.message);
+    res.status(500).json(err);
   }
 };
