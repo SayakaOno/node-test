@@ -6,7 +6,8 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test node app.js",
     "server": "cross-env NODE_ENV=prod node app.js",
-    "jest": "./node_modules/.bin/jest --watchAll"
+    "jest": "./node_modules/.bin/jest --watchAll",
+    "test:unit": "jest test/unit/*"
   },
   "author": "",
   "license": "ISC",
