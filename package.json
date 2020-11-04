@@ -8,7 +8,7 @@
     "server": "cross-env NODE_ENV=prod node server.js",
     "jest": "./node_modules/.bin/jest --watchAll",
     "test:unit": "jest test/unit/*",
-    "test:integration": "cross-env NODE_ENV=prod jest --watchAll --detectOpenHandles test/integration/*"
+    "test:integration": "cross-env NODE_ENV=test jest --watchAll --detectOpenHandles test/integration/*"
   },
   "author": "",
   "license": "ISC",
