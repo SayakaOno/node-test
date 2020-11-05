@@ -16,7 +16,7 @@ const connect = async () => {
 
 const disconnect = async () => {
   try {
-    await mongoose.disonnect(URL);
+    await mongoose.disconnect(process.env.MONGODB_URL);
   } catch (err) {
     console.log(err);
     throw new Error(err);
