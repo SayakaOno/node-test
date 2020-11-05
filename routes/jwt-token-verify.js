@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const verifytoken = (req, res, next) => {
   const token = req.header('auth-token');
   if (!token) {
-    res.status(400).json('Toekn not provided in auth-token header');
+    res.status(400).json('Token not provided in auth-token header');
   }
   try {
     const jwtTokenVerify = jwt.verify(token, process.env.JWT_TOKEN_KEY);
