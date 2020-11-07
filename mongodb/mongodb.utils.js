@@ -31,7 +31,6 @@ const dropCollection = async collectionName => {
       console.log('namespace %s not found', collectionName);
     }
     console.log(err);
-    throw new Error(err);
   }
 };
 
